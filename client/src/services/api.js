@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+// In production, use relative URL (same server serves frontend and API)
+// In development, use localhost:5000
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
+  baseURL: process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:5000/api',
 });
 
 api.interceptors.request.use((config) => {
