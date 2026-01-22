@@ -31,6 +31,7 @@ const Login = () => {
   return (
     <div className="auth-container">
       <div className="auth-card">
+        <img src="/logo250.png" alt="MyFitnessCoachAI" className="auth-logo" />
         <h1 className="auth-title">Welcome Back</h1>
         <p className="auth-subtitle">Sign in to continue your fitness journey</p>
 

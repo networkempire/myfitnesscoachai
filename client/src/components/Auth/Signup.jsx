@@ -43,6 +43,7 @@ const Signup = () => {
   return (
     <div className="auth-container">
       <div className="auth-card">
+        <img src="/logo250.png" alt="MyFitnessCoachAI" className="auth-logo" />
         <h1 className="auth-title">Start Your Journey</h1>
         <p className="auth-subtitle">Create an account to get your personalized fitness program</p>
 

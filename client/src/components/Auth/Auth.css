@@ -24,6 +24,13 @@
   padding: 40px;
   width: 100%;
   max-width: 420px;
+  text-align: center;
+}
+
+.auth-logo {
+  height: 60px;
+  width: auto;
+  margin-bottom: 20px;
 }
 
 .auth-title {
