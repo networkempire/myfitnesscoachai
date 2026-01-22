@@ -9,13 +9,12 @@ import {
   Tooltip,
   ResponsiveContainer
 } from 'recharts';
-import { getWeightProgression, getExerciseList, getFullStats } from '../services/program';
+import { getWeightProgression, getFullStats } from '../services/program';
 import Navigation from '../components/Navigation';
 import './ProgressPage.css';
 
 const ProgressPage = () => {
   const [stats, setStats] = useState(null);
-  const [exercises, setExercises] = useState([]);
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [progressionData, setProgressionData] = useState({});
   const [loading, setLoading] = useState(true);
@@ -29,15 +28,13 @@ const ProgressPage = () => {
     try {
       setLoading(true);
 
-      // Load stats, exercises, and all progression data
-      const [statsRes, exercisesRes, progressionRes] = await Promise.all([
+      // Load stats and progression data
+      const [statsRes, progressionRes] = await Promise.all([
         getFullStats(),
-        getExerciseList(),
         getWeightProgression()
       ]);
 
       setStats(statsRes);
-      setExercises(exercisesRes.exercises || []);
       setProgressionData(progressionRes.progression || {});
 
       // Select first exercise with data by default
