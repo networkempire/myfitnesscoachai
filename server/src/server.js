@@ -10,6 +10,7 @@ const statsRoutes = require('./routes/statsRoutes');
 const workoutLogRoutes = require('./routes/workoutLogRoutes');
 const transcriptionRoutes = require('./routes/transcriptionRoutes');
 const progressRoutes = require('./routes/progressRoutes');
+const profileUpdateRoutes = require('./routes/profileUpdate');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -30,6 +31,7 @@ app.use('/api/stats', statsRoutes);
 app.use('/api/workout-log', workoutLogRoutes);
 app.use('/api/transcribe', transcriptionRoutes);
 app.use('/api/progress', progressRoutes);
+app.use('/api/profile-update', profileUpdateRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

@@ -137,3 +137,29 @@
 .auth-switch a:hover {
   text-decoration: underline;
 }
+
+.forgot-password-link {
+  text-align: right;
+  margin-top: -12px;
+}
+
+.forgot-password-link a {
+  color: var(--dark-teal);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.forgot-password-link a:hover {
+  text-decoration: underline;
+}
+
+.auth-success {
+  background: #d1fae5;
+  border: 1px solid #6ee7b7;
+  border-radius: 8px;
+  color: #065f46;
+  font-size: 14px;
+  padding: 12px;
+  margin-bottom: 20px;
+  text-align: center;
+}

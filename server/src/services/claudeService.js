@@ -82,6 +82,40 @@ const STARTER_MESSAGE = `Hello! I'm excited to be your fitness coach. I'm here t
 
 To build something that actually works for YOUR life, I need to learn about you. Let's start with the big picture: What's the main fitness goal you want to achieve? Are you looking to lose weight, build muscle, get stronger, improve your energy, or something else?`;
 
+// ============ PROFILE UPDATE PROMPTS ============
+
+const UPDATE_SYSTEM_PROMPT = `You are an expert fitness coach having a quick check-in with an existing client. They want to update something about their profile - maybe a new injury, equipment changes, schedule changes, or something they forgot to mention.
+
+YOUR PURPOSE:
+Help them update their profile information through a brief, focused conversation. You already have their complete profile from their original intake - you're just collecting what's changed.
+
+CONVERSATION STYLE:
+- Be warm and supportive
+- Keep it brief and focused - this is a quick update, not a full intake
+- Ask clarifying questions when needed (e.g., if they mention an injury, ask about severity and movements to avoid)
+- Acknowledge what they're telling you
+
+WHAT TO ASK ABOUT (only if relevant to their update):
+- If injury: What happened? Severity? What movements should we avoid? Is it temporary or permanent?
+- If equipment change: What new equipment do they have? Or what did they lose access to?
+- If schedule change: How many days can they work out now? How much time per session?
+- If goal change: What's their new goal? Why the change?
+- If diet change: New restrictions? Changed preferences?
+
+ENDING THE CONVERSATION:
+When you have enough information about their update, provide a brief summary:
+
+"Got it! Here's what I'm updating:
+- [List each change in bullet points]
+
+Should I adjust your workout program based on these changes?"
+
+After they confirm, respond with exactly: "UPDATE_COMPLETE"
+
+IMPORTANT: Keep responses short (2-3 sentences max). This is a quick update, not a new intake.`;
+
+const UPDATE_STARTER_MESSAGE = `Hey! What's on your mind? Let me know what's changed - whether it's a new injury, equipment update, schedule change, or anything else I should know about.`;
+
 async function sendIntakeMessage(conversationHistory) {
   // If no messages yet, return the starter message directly (no API call needed)
   if (conversationHistory.length === 0) {
@@ -110,6 +144,90 @@ async function sendIntakeMessage(conversationHistory) {
   });
 
   return response.content[0].text;
+}
+
+// ============ PROFILE UPDATE FUNCTIONS ============
+
+async function sendUpdateMessage(conversationHistory, currentProfileData) {
+  // If no messages yet, return the starter message directly
+  if (conversationHistory.length === 0) {
+    return UPDATE_STARTER_MESSAGE;
+  }
+
+  // Build system prompt with current profile context
+  const contextualPrompt = `${UPDATE_SYSTEM_PROMPT}
+
+CURRENT CLIENT PROFILE:
+${JSON.stringify(currentProfileData, null, 2)}
+
+Use this profile to understand what the client currently has set up. Only ask about changes they're making.`;
+
+  // Build messages for Claude
+  let messages = [];
+
+  if (conversationHistory[0]?.role === 'assistant') {
+    messages = [
+      { role: 'user', content: 'Hi, I need to update something in my profile.' },
+      ...conversationHistory
+    ];
+  } else {
+    messages = conversationHistory;
+  }
+
+  const response = await client.messages.create({
+    model: 'claude-sonnet-4-20250514',
+    max_tokens: 1024,
+    system: contextualPrompt,
+    messages: messages
+  });
+
+  return response.content[0].text;
+}
+
+async function extractProfileChanges(conversationHistory, currentProfileData) {
+  const extractionPrompt = `Based on this profile update conversation, extract ONLY the changes the user wants to make to their existing profile.
+
+CURRENT PROFILE:
+${JSON.stringify(currentProfileData, null, 2)}
+
+UPDATE CONVERSATION:
+${conversationHistory.map(m => `${m.role}: ${m.content}`).join('\n')}
+
+Extract ONLY the fields that are being changed. Return valid JSON with this structure:
+{
+  "update_type": "injury|equipment|schedule|goals|nutrition|flexibility|health|other",
+  "changes": {
+    // Only include sections/fields that are being updated
+    // Use the same structure as the current profile
+    // For example, if adding an injury:
+    // "flexibility": { "injuries": ["new injury description"] }
+    // If changing days per week:
+    // "workout": { "days_per_week": 4 }
+  },
+  "summary": "Brief human-readable summary of changes",
+  "suggests_regeneration": true/false
+}
+
+IMPORTANT:
+- Only include fields that are CHANGING
+- For arrays (like injuries, equipment), include the COMPLETE new array (not just additions)
+- Set suggests_regeneration to true if changes affect: injuries, equipment, days_per_week, goals, or dietary_restrictions
+- Set suggests_regeneration to false for minor updates like preferences or clarifications`;
+
+  const response = await client.messages.create({
+    model: 'claude-sonnet-4-20250514',
+    max_tokens: 2048,
+    messages: [{ role: 'user', content: extractionPrompt }]
+  });
+
+  const text = response.content[0].text;
+
+  const jsonMatch = text.match(/\{[\s\S]*\}/);
+  if (jsonMatch) {
+    return JSON.parse(jsonMatch[0]);
+  }
+
+  throw new Error('Failed to extract profile changes from conversation');
 }
 
 async function extractUserData(conversationHistory) {
@@ -417,5 +535,9 @@ module.exports = {
   generateWorkoutProgram,
   generateNutritionPlan,
   generateFlexibilityProgram,
-  generateAllPrograms
+  generateAllPrograms,
+  // Profile update exports
+  sendUpdateMessage,
+  extractProfileChanges,
+  UPDATE_STARTER_MESSAGE
 };

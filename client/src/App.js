@@ -10,6 +10,8 @@ import FlexibilityPage from './pages/FlexibilityPage';
 import ProgressPage from './pages/ProgressPage';
 import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
+import ForgotPassword from './components/Auth/ForgotPassword';
+import ResetPassword from './components/Auth/ResetPassword';
 import './App.css';
 
 const ProtectedRoute = ({ children }) => {
@@ -59,6 +61,22 @@ function App() {
             element={
               <PublicRoute>
                 <Signup />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <PublicRoute>
+                <ForgotPassword />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/reset-password"
+            element={
+              <PublicRoute>
+                <ResetPassword />
               </PublicRoute>
             }
           />

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { getActiveProgram, getUserStats } from '../services/program';
 import Navigation from '../components/Navigation';
+import ProfileUpdateDrawer from '../components/ProfileUpdate/ProfileUpdateDrawer';
 import './Dashboard.css';
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -14,6 +15,7 @@ const Dashboard = () => {
   const [program, setProgram] = useState(null);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState(null);
+  const [showProfileUpdate, setShowProfileUpdate] = useState(false);
 
   const today = DAYS[new Date().getDay()];
 
@@ -62,9 +64,17 @@ const Dashboard = () => {
   // Check if today is a rest day
   const isRestDay = program?.workout?.rest_days?.includes(today);
 
+  // Handle profile update completion
+  const handleProfileUpdateComplete = (result) => {
+    if (result.programs_regenerated) {
+      // Refresh program data if programs were regenerated
+      checkForProgram();
+    }
+  };
+
   return (
     <div className="dashboard-container">
-      <Navigation active="dashboard" />
+      <Navigation active="dashboard" onOpenProfileUpdate={() => setShowProfileUpdate(true)} />
 
       <main className="dashboard-main">
         <div className="welcome-section">
@@ -202,12 +212,20 @@ const Dashboard = () => {
               <button className="card-button" onClick={() => navigate('/intake')}>Start Now</button>
             </div>
           ) : (
-            <div className="dashboard-card">
-              <div className="card-icon">💬</div>
-              <h3>New Consultation</h3>
-              <p>Start a new intake to update your program</p>
-              <button className="card-button secondary" onClick={() => navigate('/intake')}>Start New</button>
-            </div>
+            <>
+              <div className="dashboard-card highlight-update">
+                <div className="card-icon">✏️</div>
+                <h3>Update Profile</h3>
+                <p>Quick update for injuries, equipment, or schedule changes</p>
+                <button className="card-button" onClick={() => setShowProfileUpdate(true)}>Quick Update</button>
+              </div>
+              <div className="dashboard-card">
+                <div className="card-icon">💬</div>
+                <h3>New Consultation</h3>
+                <p>Start a new intake to update your program</p>
+                <button className="card-button secondary" onClick={() => navigate('/intake')}>Start New</button>
+              </div>
+            </>
           )}
 
           <div className="dashboard-card">
@@ -262,6 +280,12 @@ const Dashboard = () => {
           </div>
         </div>
       </main>
+
+      <ProfileUpdateDrawer
+        isOpen={showProfileUpdate}
+        onClose={() => setShowProfileUpdate(false)}
+        onUpdateComplete={handleProfileUpdateComplete}
+      />
     </div>
   );
 };

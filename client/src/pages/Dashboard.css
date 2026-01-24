@@ -167,6 +167,19 @@
   background: linear-gradient(135deg, #fff 0%, #fff5f5 100%);
 }
 
+.dashboard-card.highlight-update {
+  border: 2px solid var(--dark-teal);
+  background: linear-gradient(135deg, #fff 0%, var(--azure-mist) 100%);
+}
+
+.dashboard-card.highlight-update .card-button {
+  background: var(--dark-teal);
+}
+
+.dashboard-card.highlight-update .card-button:hover:not(:disabled) {
+  background: #0a3640;
+}
+
 .card-icon {
   font-size: 48px;
   margin-bottom: 16px;

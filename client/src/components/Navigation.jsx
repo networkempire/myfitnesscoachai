@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Navigation.css';
 
-const Navigation = ({ active }) => {
+const Navigation = ({ active, onOpenProfileUpdate }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const settingsRef = useRef(null);
@@ -77,6 +77,11 @@ const Navigation = ({ active }) => {
                 <span className="user-email">{user?.email}</span>
               </div>
               <div className="settings-divider"></div>
+              {onOpenProfileUpdate && (
+                <button onClick={() => { setSettingsOpen(false); onOpenProfileUpdate(); }}>
+                  Update My Profile
+                </button>
+              )}
               <button onClick={() => { setSettingsOpen(false); navigate('/account'); }}>
                 Account Settings
               </button>
@@ -127,6 +132,11 @@ const Navigation = ({ active }) => {
             </button>
           ))}
           <div className="mobile-nav-divider"></div>
+          {onOpenProfileUpdate && (
+            <button onClick={() => { setMenuOpen(false); onOpenProfileUpdate(); }}>
+              Update My Profile
+            </button>
+          )}
           <button onClick={() => handleNavigate('/account')}>
             Account Settings
           </button>
