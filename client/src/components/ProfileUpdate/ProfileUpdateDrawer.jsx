@@ -40,7 +40,7 @@ const ProfileUpdateDrawer = ({ isOpen, onClose, onUpdateComplete }) => {
     if (isOpen && messages.length === 0) {
       initializeConversation();
     }
-  }, [isOpen]);
+  }, [isOpen, messages.length]);
 
   // Reset state when drawer closes
   useEffect(() => {
