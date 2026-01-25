@@ -6,6 +6,12 @@ import './ProgramPages.css';
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+// Generate YouTube search URL for exercise demonstrations
+const getYouTubeSearchUrl = (exerciseName) => {
+  const searchQuery = `how to do ${exerciseName}`.replace(/\s+/g, '+');
+  return `https://www.youtube.com/results?search_query=${encodeURIComponent(searchQuery)}`;
+};
+
 const WorkoutPage = () => {
   const [program, setProgram] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -217,7 +223,18 @@ const WorkoutPage = () => {
                   <div key={index} className={`exercise-card ${workoutActive && isComplete ? 'completed' : ''}`}>
                     <div className="exercise-header">
                       <span className="exercise-number">{index + 1}</span>
-                      <h5>{exercise.name}</h5>
+                      <h5>
+                        {exercise.name}
+                        <a
+                          href={getYouTubeSearchUrl(exercise.name)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="youtube-link"
+                          title={`Watch how to do ${exercise.name}`}
+                        >
+                          ▶
+                        </a>
+                      </h5>
                       {workoutActive && isComplete && <span className="exercise-check">✓</span>}
                     </div>
                     <div className="exercise-details">

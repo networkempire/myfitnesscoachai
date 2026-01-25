@@ -4,6 +4,12 @@ import { getActiveProgram } from '../services/program';
 import Navigation from '../components/Navigation';
 import './ProgramPages.css';
 
+// Generate YouTube search URL for stretch demonstrations
+const getYouTubeSearchUrl = (stretchName) => {
+  const searchQuery = `how to do ${stretchName} stretch`.replace(/\s+/g, '+');
+  return `https://www.youtube.com/results?search_query=${encodeURIComponent(searchQuery)}`;
+};
+
 const FlexibilityPage = () => {
   const [flexibility, setFlexibility] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -95,7 +101,18 @@ const FlexibilityPage = () => {
                   <div className="stretch-header">
                     <span className="stretch-number">{index + 1}</span>
                     <div>
-                      <h5>{stretch.name}</h5>
+                      <h5>
+                        {stretch.name}
+                        <a
+                          href={getYouTubeSearchUrl(stretch.name)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="youtube-link"
+                          title={`Watch how to do ${stretch.name}`}
+                        >
+                          ▶
+                        </a>
+                      </h5>
                       <span className="stretch-target">{stretch.target_area}</span>
                     </div>
                   </div>
@@ -131,7 +148,18 @@ const FlexibilityPage = () => {
             <div className="desk-breaks-list">
               {flexibility.desk_breaks.map((stretch, index) => (
                 <div key={index} className="desk-break-card">
-                  <h5>{stretch.name}</h5>
+                  <h5>
+                    {stretch.name}
+                    <a
+                      href={getYouTubeSearchUrl(stretch.name)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="youtube-link"
+                      title={`Watch how to do ${stretch.name}`}
+                    >
+                      ▶
+                    </a>
+                  </h5>
                   <span className="break-frequency">{stretch.frequency}</span>
                   <p>{stretch.instructions}</p>
                 </div>

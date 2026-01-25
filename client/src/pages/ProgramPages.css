@@ -682,3 +682,32 @@
     padding: 8px 8px;
   }
 }
+
+/* YouTube Link Styles */
+.youtube-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-left: 8px;
+  background: #ff0000;
+  color: white;
+  border-radius: 4px;
+  font-size: 12px;
+  text-decoration: none;
+  vertical-align: middle;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.youtube-link:hover {
+  background: #cc0000;
+  transform: scale(1.1);
+}
+
+.exercise-header h5,
+.stretch-header h5,
+.desk-break-card h5 {
+  display: flex;
+  align-items: center;
+}
