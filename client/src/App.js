@@ -12,6 +12,8 @@ import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import ResetPassword from './components/Auth/ResetPassword';
+import BetaLanding from './pages/BetaLanding';
+import AdminPage from './pages/AdminPage';
 import './App.css';
 
 const ProtectedRoute = ({ children }) => {
@@ -39,7 +41,7 @@ const PublicRoute = ({ children }) => {
     );
   }
 
-  return user ? <Navigate to="/dashboard" /> : children;
+  return user ? <Navigate to="/app" /> : children;
 };
 
 function App() {
@@ -47,7 +49,8 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<BetaLanding />} />
+          <Route path="/home" element={<Home />} />
           <Route
             path="/login"
             element={
@@ -57,13 +60,14 @@ function App() {
             }
           />
           <Route
-            path="/signup"
+            path="/enter-here"
             element={
               <PublicRoute>
                 <Signup />
               </PublicRoute>
             }
           />
+          <Route path="/signup" element={<Navigate to="/enter-here" />} />
           <Route
             path="/forgot-password"
             element={
@@ -81,7 +85,7 @@ function App() {
             }
           />
           <Route
-            path="/dashboard"
+            path="/app"
             element={
               <ProtectedRoute>
                 <Dashboard />
@@ -89,7 +93,7 @@ function App() {
             }
           />
           <Route
-            path="/intake"
+            path="/app/intake"
             element={
               <ProtectedRoute>
                 <IntakePage />
@@ -97,7 +101,7 @@ function App() {
             }
           />
           <Route
-            path="/workout"
+            path="/app/workout"
             element={
               <ProtectedRoute>
                 <WorkoutPage />
@@ -105,7 +109,7 @@ function App() {
             }
           />
           <Route
-            path="/nutrition"
+            path="/app/nutrition"
             element={
               <ProtectedRoute>
                 <NutritionPage />
@@ -113,7 +117,7 @@ function App() {
             }
           />
           <Route
-            path="/flexibility"
+            path="/app/flexibility"
             element={
               <ProtectedRoute>
                 <FlexibilityPage />
@@ -121,10 +125,18 @@ function App() {
             }
           />
           <Route
-            path="/progress"
+            path="/app/progress"
             element={
               <ProtectedRoute>
                 <ProgressPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <AdminPage />
               </ProtectedRoute>
             }
           />

@@ -20,7 +20,7 @@ const Login = () => {
     try {
       const data = await login(email, password);
       loginUser(data.token, data.user);
-      navigate('/dashboard');
+      navigate('/app');
     } catch (err) {
       setError(err.response?.data?.error || 'Login failed');
     } finally {
@@ -72,7 +72,7 @@ const Login = () => {
         </form>
 
         <p className="auth-switch">
-          Don't have an account? <Link to="/signup">Sign up</Link>
+          Don't have an account? <Link to="/">Request beta access</Link>
         </p>
       </div>
     </div>

@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const EmailWhitelist = require('../models/EmailWhitelist');
 const { generateToken } = require('../utils/jwt');
 const { sendPasswordResetEmail } = require('../services/emailService');
 
@@ -14,6 +15,15 @@ const signup = async (req, res, next) => {
       return res.status(400).json({ error: 'Password must be at least 6 characters' });
     }
 
+    // Check if email is whitelisted
+    const isWhitelisted = await EmailWhitelist.isWhitelisted(email);
+    if (!isWhitelisted) {
+      return res.status(403).json({
+        error: 'This email is not on our beta list. Please request access first.',
+        notWhitelisted: true
+      });
+    }
+
     const existingUser = await User.findByEmail(email);
     if (existingUser) {
       return res.status(409).json({ error: 'Email already exists' });
@@ -27,7 +37,8 @@ const signup = async (req, res, next) => {
       user: {
         id: user.id,
         email: user.email,
-        is_premium: user.is_premium
+        is_premium: user.is_premium,
+        is_admin: user.is_admin || false
       }
     });
   } catch (error) {
@@ -60,7 +71,8 @@ const login = async (req, res, next) => {
       user: {
         id: user.id,
         email: user.email,
-        is_premium: user.is_premium
+        is_premium: user.is_premium,
+        is_admin: user.is_admin || false
       }
     });
   } catch (error) {
@@ -73,7 +85,8 @@ const verify = async (req, res) => {
     user: {
       id: req.user.id,
       email: req.user.email,
-      is_premium: req.user.is_premium
+      is_premium: req.user.is_premium,
+      is_admin: req.user.is_admin || false
     }
   });
 };

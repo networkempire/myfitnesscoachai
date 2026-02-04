@@ -1,0 +1,297 @@
+/* Admin Page Styles */
+.admin-page {
+  min-height: 100vh;
+  background: var(--azure-mist, #eefbff);
+  padding: 20px;
+}
+
+.admin-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.admin-header h1 {
+  color: var(--dark-teal, #0f4c5c);
+  font-size: 2rem;
+}
+
+.admin-back-link {
+  color: var(--dark-teal, #0f4c5c);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.admin-back-link:hover {
+  color: var(--deep-crimson, #9a031e);
+}
+
+/* Tabs */
+.admin-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 10px;
+}
+
+.admin-tab {
+  padding: 12px 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #6b7280;
+  border-radius: 8px 8px 0 0;
+  transition: all 0.2s ease;
+}
+
+.admin-tab:hover {
+  color: var(--dark-teal, #0f4c5c);
+  background: rgba(15, 76, 92, 0.1);
+}
+
+.admin-tab.active {
+  color: var(--dark-teal, #0f4c5c);
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-bottom: 2px solid white;
+  margin-bottom: -12px;
+}
+
+/* Content Panel */
+.admin-panel {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.admin-panel h2 {
+  color: var(--dark-teal, #0f4c5c);
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+/* Table Styles */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.admin-table th {
+  background: #f9fafb;
+  font-weight: 600;
+  color: var(--dark-teal, #0f4c5c);
+}
+
+.admin-table tr:hover {
+  background: #f9fafb;
+}
+
+.admin-table td {
+  color: #374151;
+}
+
+/* Status Badges */
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.status-pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-approved {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.status-rejected {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* Action Buttons */
+.admin-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-approve {
+  padding: 6px 16px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.btn-approve:hover:not(:disabled) {
+  background: #059669;
+}
+
+.btn-reject {
+  padding: 6px 16px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.btn-reject:hover:not(:disabled) {
+  background: #dc2626;
+}
+
+.btn-remove {
+  padding: 6px 16px;
+  background: #6b7280;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.btn-remove:hover:not(:disabled) {
+  background: #4b5563;
+}
+
+.btn-approve:disabled,
+.btn-reject:disabled,
+.btn-remove:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Add Whitelist Form */
+.add-whitelist-form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.add-whitelist-form input {
+  padding: 10px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  flex: 1;
+  min-width: 200px;
+}
+
+.add-whitelist-form input:focus {
+  outline: none;
+  border-color: var(--dark-teal, #0f4c5c);
+}
+
+.add-whitelist-form button {
+  padding: 10px 24px;
+  background: var(--dark-teal, #0f4c5c);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.add-whitelist-form button:hover:not(:disabled) {
+  background: #0a3640;
+}
+
+.add-whitelist-form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Messages */
+.admin-message {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.admin-message.success {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.admin-message.error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* Empty State */
+.admin-empty {
+  text-align: center;
+  padding: 40px;
+  color: #6b7280;
+}
+
+.admin-loading {
+  text-align: center;
+  padding: 40px;
+  color: #6b7280;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .admin-tabs {
+    flex-wrap: wrap;
+  }
+
+  .admin-table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .add-whitelist-form {
+    flex-direction: column;
+  }
+
+  .add-whitelist-form input {
+    width: 100%;
+  }
+}

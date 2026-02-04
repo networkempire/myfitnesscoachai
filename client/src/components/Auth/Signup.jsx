@@ -9,6 +9,7 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [notWhitelisted, setNotWhitelisted] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { loginUser } = useAuth();
@@ -32,8 +33,11 @@ const Signup = () => {
     try {
       const data = await signup(email, password);
       loginUser(data.token, data.user);
-      navigate('/dashboard');
+      navigate('/app');
     } catch (err) {
+      if (err.response?.data?.notWhitelisted) {
+        setNotWhitelisted(true);
+      }
       setError(err.response?.data?.error || 'Signup failed');
     } finally {
       setLoading(false);
@@ -47,7 +51,18 @@ const Signup = () => {
         <h1 className="auth-title">Start Your Journey</h1>
         <p className="auth-subtitle">Create an account to get your personalized fitness program</p>
 
-        {error && <div className="auth-error">{error}</div>}
+        {error && (
+          <div className="auth-error">
+            {error}
+            {notWhitelisted && (
+              <div style={{ marginTop: '10px' }}>
+                <Link to="/" style={{ color: 'inherit', fontWeight: 'bold' }}>
+                  Request beta access here
+                </Link>
+              </div>
+            )}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">

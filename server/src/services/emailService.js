@@ -106,6 +106,80 @@ async function sendPasswordResetEmail(email, resetToken) {
   }
 }
 
+/**
+ * Send a beta request notification to admin
+ */
+async function sendBetaRequestNotification(name, email) {
+  const timestamp = new Date().toLocaleString();
+
+  const mailOptions = {
+    from: process.env.EMAIL_FROM || 'noreply@myfitnesscoachai.com',
+    to: 'me@richboyd.email',
+    subject: 'New Beta Tester Request - MyFitnessCoachAI',
+    html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      </head>
+      <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="text-align: center; margin-bottom: 30px;">
+          <h1 style="color: #0f4c5c; margin: 0;">MyFitnessCoachAI</h1>
+        </div>
+
+        <div style="background: #f9fafb; border-radius: 8px; padding: 30px; margin-bottom: 20px;">
+          <h2 style="color: #1f2937; margin-top: 0;">New Beta Tester Request</h2>
+          <p>Someone has requested to join the beta program:</p>
+
+          <div style="background: white; border-radius: 8px; padding: 20px; margin: 20px 0;">
+            <p style="margin: 10px 0;"><strong>Name:</strong> ${name}</p>
+            <p style="margin: 10px 0;"><strong>Email:</strong> ${email}</p>
+            <p style="margin: 10px 0;"><strong>Submitted:</strong> ${timestamp}</p>
+          </div>
+
+          <p style="font-size: 14px; color: #666;">
+            Log in to the admin panel to approve or reject this request.
+          </p>
+        </div>
+      </body>
+      </html>
+    `,
+    text: `
+      New Beta Tester Request
+
+      Name: ${name}
+      Email: ${email}
+      Submitted: ${timestamp}
+
+      Log in to the admin panel to approve or reject this request.
+    `
+  };
+
+  // If no transporter (SendGrid not configured), log to console for development
+  if (!transporter) {
+    console.log('='.repeat(60));
+    console.log('BETA REQUEST NOTIFICATION (SendGrid not configured)');
+    console.log('='.repeat(60));
+    console.log('Name:', name);
+    console.log('Email:', email);
+    console.log('Timestamp:', timestamp);
+    console.log('='.repeat(60));
+    return { success: true, method: 'console' };
+  }
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log(`Beta request notification sent for ${email}`);
+    return { success: true, method: 'sendgrid' };
+  } catch (error) {
+    console.error('Failed to send beta request notification:', error);
+    // Don't throw - we don't want to fail the request just because email failed
+    return { success: false, method: 'failed', error: error.message };
+  }
+}
+
 module.exports = {
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  sendBetaRequestNotification
 };

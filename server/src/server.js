@@ -11,6 +11,8 @@ const workoutLogRoutes = require('./routes/workoutLogRoutes');
 const transcriptionRoutes = require('./routes/transcriptionRoutes');
 const progressRoutes = require('./routes/progressRoutes');
 const profileUpdateRoutes = require('./routes/profileUpdate');
+const betaRoutes = require('./routes/beta');
+const adminRoutes = require('./routes/admin');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -32,6 +34,8 @@ app.use('/api/workout-log', workoutLogRoutes);
 app.use('/api/transcribe', transcriptionRoutes);
 app.use('/api/progress', progressRoutes);
 app.use('/api/profile-update', profileUpdateRoutes);
+app.use('/api/beta', betaRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

@@ -13,7 +13,7 @@ const authMiddleware = async (req, res, next) => {
     const decoded = verifyToken(token);
 
     const result = await pool.query(
-      'SELECT id, email, is_premium FROM users WHERE id = $1',
+      'SELECT id, email, is_premium, is_admin FROM users WHERE id = $1',
       [decoded.userId]
     );
 
