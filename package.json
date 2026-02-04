@@ -4,10 +4,10 @@
   "description": "AI-powered personalized fitness app",
   "scripts": {
     "install:all": "npm install --prefix server && npm install --prefix client",
-    "build": "npm run build --prefix client",
+    "build": "CI=true npm run build --prefix client",
     "start": "npm start --prefix server",
     "dev": "concurrently \"npm run dev --prefix server\" \"npm start --prefix client\"",
-    "postinstall": "npm run install:all && npm run build"
+    "postinstall": "npm run install:all"
   },
   "engines": {
     "node": ">=18.0.0"
