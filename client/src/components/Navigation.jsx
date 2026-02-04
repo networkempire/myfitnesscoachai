@@ -88,6 +88,14 @@ const Navigation = ({ active, onOpenProfileUpdate }) => {
               <button onClick={() => { setSettingsOpen(false); navigate('/app/billing'); }}>
                 Subscription & Billing
               </button>
+              {user?.is_admin && (
+                <>
+                  <div className="settings-divider"></div>
+                  <button onClick={() => { setSettingsOpen(false); navigate('/admin'); }}>
+                    Admin Dashboard
+                  </button>
+                </>
+              )}
               <div className="settings-divider"></div>
               <button className="signout-option" onClick={handleLogout}>
                 Sign Out
@@ -143,6 +151,14 @@ const Navigation = ({ active, onOpenProfileUpdate }) => {
           <button onClick={() => handleNavigate('/app/billing')}>
             Subscription & Billing
           </button>
+          {user?.is_admin && (
+            <>
+              <div className="mobile-nav-divider"></div>
+              <button onClick={() => handleNavigate('/admin')}>
+                Admin Dashboard
+              </button>
+            </>
+          )}
           <div className="mobile-nav-divider"></div>
           <button className="signout-mobile" onClick={handleLogout}>
             Sign Out
