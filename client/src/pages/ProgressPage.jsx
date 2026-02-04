@@ -114,7 +114,7 @@ const ProgressPage = () => {
             <div className="no-data-message">
               <p>No workout data yet!</p>
               <p>Complete some workouts and log your weights to see your progression charts.</p>
-              <button onClick={() => navigate('/workout')} className="start-workout-btn">
+              <button onClick={() => navigate('/app/workout')} className="start-workout-btn">
                 Start a Workout
               </button>
             </div>

@@ -161,7 +161,7 @@ const Dashboard = () => {
 
                 <button
                   className="start-workout-button"
-                  onClick={() => navigate('/workout')}
+                  onClick={() => navigate('/app/workout')}
                 >
                   Start Today's Workout
                 </button>
@@ -169,7 +169,7 @@ const Dashboard = () => {
             ) : (
               <div className="no-workout-card">
                 <p>No workout scheduled for today. Check your full program for your weekly schedule.</p>
-                <button onClick={() => navigate('/workout')} className="view-program-link">
+                <button onClick={() => navigate('/app/workout')} className="view-program-link">
                   View Full Program
                 </button>
               </div>
@@ -209,7 +209,7 @@ const Dashboard = () => {
               <div className="card-icon">💬</div>
               <h3>Start Intake</h3>
               <p>Begin your personalized consultation with our AI coach</p>
-              <button className="card-button" onClick={() => navigate('/intake')}>Start Now</button>
+              <button className="card-button" onClick={() => navigate('/app/intake')}>Start Now</button>
             </div>
           ) : (
             <>
@@ -223,7 +223,7 @@ const Dashboard = () => {
                 <div className="card-icon">💬</div>
                 <h3>New Consultation</h3>
                 <p>Start a new intake to update your program</p>
-                <button className="card-button secondary" onClick={() => navigate('/intake')}>Start New</button>
+                <button className="card-button secondary" onClick={() => navigate('/app/intake')}>Start New</button>
               </div>
             </>
           )}
@@ -234,7 +234,7 @@ const Dashboard = () => {
             <p>View and track your workout program</p>
             <button
               className="card-button"
-              onClick={() => navigate('/workout')}
+              onClick={() => navigate('/app/workout')}
               disabled={!hasProgram && !loading}
             >
               {hasProgram ? 'View Workout' : 'Complete Intake First'}
@@ -247,7 +247,7 @@ const Dashboard = () => {
             <p>Check your personalized nutrition plan</p>
             <button
               className="card-button"
-              onClick={() => navigate('/nutrition')}
+              onClick={() => navigate('/app/nutrition')}
               disabled={!hasProgram && !loading}
             >
               {hasProgram ? 'View Nutrition' : 'Complete Intake First'}
@@ -260,7 +260,7 @@ const Dashboard = () => {
             <p>Stretching and mobility routines</p>
             <button
               className="card-button"
-              onClick={() => navigate('/flexibility')}
+              onClick={() => navigate('/app/flexibility')}
               disabled={!hasProgram && !loading}
             >
               {hasProgram ? 'View Flexibility' : 'Complete Intake First'}
@@ -273,7 +273,7 @@ const Dashboard = () => {
             <p>Track your gains and see your journey</p>
             <button
               className="card-button secondary"
-              onClick={() => navigate('/progress')}
+              onClick={() => navigate('/app/progress')}
             >
               View Progress
             </button>

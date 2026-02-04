@@ -22,11 +22,11 @@ const Navigation = ({ active, onOpenProfileUpdate }) => {
   }, []);
 
   const navItems = [
-    { key: 'dashboard', label: 'Dashboard', path: '/dashboard' },
-    { key: 'workout', label: 'Workout', path: '/workout' },
-    { key: 'progress', label: 'Progress', path: '/progress' },
-    { key: 'nutrition', label: 'Nutrition', path: '/nutrition' },
-    { key: 'flexibility', label: 'Flexibility', path: '/flexibility' },
+    { key: 'dashboard', label: 'Dashboard', path: '/app' },
+    { key: 'workout', label: 'Workout', path: '/app/workout' },
+    { key: 'progress', label: 'Progress', path: '/app/progress' },
+    { key: 'nutrition', label: 'Nutrition', path: '/app/nutrition' },
+    { key: 'flexibility', label: 'Flexibility', path: '/app/flexibility' },
   ];
 
   const handleNavigate = (path) => {
@@ -44,7 +44,7 @@ const Navigation = ({ active, onOpenProfileUpdate }) => {
     <>
       {/* Top Navigation Header */}
       <header className="top-nav">
-        <div className="nav-logo" onClick={() => navigate('/dashboard')}>
+        <div className="nav-logo" onClick={() => navigate('/app')}>
           <img src="/logo250.png" alt="MyFitnessCoachAI" />
         </div>
 
@@ -82,10 +82,10 @@ const Navigation = ({ active, onOpenProfileUpdate }) => {
                   Update My Profile
                 </button>
               )}
-              <button onClick={() => { setSettingsOpen(false); navigate('/account'); }}>
+              <button onClick={() => { setSettingsOpen(false); navigate('/app/account'); }}>
                 Account Settings
               </button>
-              <button onClick={() => { setSettingsOpen(false); navigate('/billing'); }}>
+              <button onClick={() => { setSettingsOpen(false); navigate('/app/billing'); }}>
                 Subscription & Billing
               </button>
               <div className="settings-divider"></div>
@@ -137,10 +137,10 @@ const Navigation = ({ active, onOpenProfileUpdate }) => {
               Update My Profile
             </button>
           )}
-          <button onClick={() => handleNavigate('/account')}>
+          <button onClick={() => handleNavigate('/app/account')}>
             Account Settings
           </button>
-          <button onClick={() => handleNavigate('/billing')}>
+          <button onClick={() => handleNavigate('/app/billing')}>
             Subscription & Billing
           </button>
           <div className="mobile-nav-divider"></div>

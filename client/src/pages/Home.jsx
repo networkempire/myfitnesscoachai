@@ -12,7 +12,7 @@ const Home = () => {
         <h1 className="home-logo">MyFitnessCoachAI</h1>
         <nav className="home-nav">
           {user ? (
-            <Link to="/dashboard" className="nav-button primary">Dashboard</Link>
+            <Link to="/app" className="nav-button primary">Dashboard</Link>
           ) : (
             <>
               <Link to="/login" className="nav-button">Sign In</Link>
@@ -34,7 +34,7 @@ const Home = () => {
         </p>
         <div className="hero-cta">
           {user ? (
-            <Link to="/dashboard" className="cta-button">Go to Dashboard</Link>
+            <Link to="/app" className="cta-button">Go to Dashboard</Link>
           ) : (
             <Link to="/signup" className="cta-button">Start Your Journey</Link>
           )}

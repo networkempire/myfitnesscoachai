@@ -68,7 +68,7 @@ const IntakePage = () => {
 
     try {
       await generateProgram(conversationId);
-      navigate('/dashboard');
+      navigate('/app');
     } catch (err) {
       setGenerationError('Failed to generate program. Please try again.');
       console.error('Program generation error:', err);

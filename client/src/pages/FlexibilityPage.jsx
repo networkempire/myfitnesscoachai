@@ -50,7 +50,7 @@ const FlexibilityPage = () => {
         <Navigation active="flexibility" />
         <div className="program-error">
           <p>{error}</p>
-          <button onClick={() => navigate('/intake')}>Start Intake</button>
+          <button onClick={() => navigate('/app/intake')}>Start Intake</button>
         </div>
       </div>
     );
