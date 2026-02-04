@@ -24,8 +24,38 @@ const AdminPage = () => {
   const [newEmail, setNewEmail] = useState('');
   const [newNotes, setNewNotes] = useState('');
 
-  // Redirect non-admins
-  if (!user?.is_admin) {
+  const isAdmin = user?.is_admin;
+
+  useEffect(() => {
+    const fetchBetaRequests = async () => {
+      try {
+        const data = await getBetaRequests();
+        setBetaRequests(data.requests);
+      } catch (error) {
+        console.error('Failed to fetch beta requests:', error);
+      }
+    };
+
+    const fetchWhitelist = async () => {
+      try {
+        const data = await getWhitelist();
+        setWhitelist(data.whitelist);
+      } catch (error) {
+        console.error('Failed to fetch whitelist:', error);
+      }
+    };
+
+    const loadData = async () => {
+      if (!isAdmin) return;
+      setLoading(true);
+      await Promise.all([fetchBetaRequests(), fetchWhitelist()]);
+      setLoading(false);
+    };
+    loadData();
+  }, [isAdmin]);
+
+  // Redirect non-admins (after hooks)
+  if (!isAdmin) {
     return <Navigate to="/app" />;
   }
 
@@ -46,15 +76,6 @@ const AdminPage = () => {
       console.error('Failed to fetch whitelist:', error);
     }
   };
-
-  useEffect(() => {
-    const loadData = async () => {
-      setLoading(true);
-      await Promise.all([fetchBetaRequests(), fetchWhitelist()]);
-      setLoading(false);
-    };
-    loadData();
-  }, []);
 
   const handleApprove = async (id) => {
     setActionLoading(id);
